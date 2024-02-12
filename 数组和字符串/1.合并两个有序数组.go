@@ -26,6 +26,8 @@ package main
 解释：需要合并的数组是 [] 和 [1] 。
 合并结果是 [1] 。
 注意，因为 m = 0 ，所以 nums1 中没有元素。nums1 中仅存的 0 仅仅是为了确保合并结果可以顺利存放到 nums1 中。
+
+https://leetcode.cn/problems/merge-sorted-array/description/
 */
 
 // 3指针
