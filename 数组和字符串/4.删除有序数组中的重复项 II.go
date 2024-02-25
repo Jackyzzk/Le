@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使得出现次数超过两次的元素只出现两次 ，返回删除后数组的新长度。
 
@@ -62,9 +64,9 @@ func RemoveDuplicateV2(nums []int) int {
 	return p + 1
 }
 
-//func main() {
-//	nums := []int{0, 0, 1, 1, 1, 1, 2, 3, 3}
-//	//nums := []int{1, 1, 1, 2, 2, 3}
-//	res := RemoveDuplicateV2(nums)
-//	fmt.Print(nums, res)
-//}
+func main() {
+	nums := []int{0, 0, 1, 1, 1, 1, 2, 3, 3}
+	//nums := []int{1, 1, 1, 2, 2, 3}
+	res := RemoveDuplicateV2(nums)
+	fmt.Print(nums, res)
+}

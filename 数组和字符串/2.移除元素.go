@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。
 
@@ -63,10 +65,10 @@ func Remove(nums []int, val int) int {
 	return l
 }
 
-//func main() {
-//	//nums, val := []int{0, 1, 2, 2, 3, 0, 4, 2}, 2
-//	//nums, val := []int{1, 1, 2}, 1
-//	nums, val := []int{2}, 3
-//	res := Remove(nums, val)
-//	fmt.Print(nums, res)
-//}
+func main() {
+	//nums, val := []int{0, 1, 2, 2, 3, 0, 4, 2}, 2
+	//nums, val := []int{1, 1, 2}, 1
+	nums, val := []int{2}, 3
+	res := Remove(nums, val)
+	fmt.Print(nums, res)
+}

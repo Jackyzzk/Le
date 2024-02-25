@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -40,9 +41,9 @@ func Profit(prices []int) int {
 	return rest
 }
 
-//func main() {
-//	//prices := []int{7, 1, 5, 3, 6, 4}
-//	prices := []int{7, 6, 4, 3, 1}
-//	res := Profit(prices)
-//	fmt.Println(res)
-//}
+func main() {
+	//prices := []int{7, 1, 5, 3, 6, 4}
+	prices := []int{7, 6, 4, 3, 1}
+	res := Profit(prices)
+	fmt.Println(res)
+}
