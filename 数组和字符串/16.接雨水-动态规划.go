@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
 
@@ -18,8 +20,18 @@ package main
 n == height.length
 1 <= n <= 2 * 104
 0 <= height[i] <= 105
+
+https://leetcode.cn/problems/trapping-rain-water/description/
 */
 
-func Rain(height []int) int {
+func trap2(height []int) int {
 
+}
+
+func main() {
+	//height := []int{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}
+	//height := []int{4, 2, 0, 3, 2, 5}
+	height := []int{5, 2, 1, 2, 1, 5} // 14
+	res := trap2(height)
+	fmt.Println(res)
 }
