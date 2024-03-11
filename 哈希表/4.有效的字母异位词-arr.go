@@ -26,29 +26,24 @@ s 和 t 仅包含小写字母
 https://leetcode.cn/problems/valid-anagram/
 */
 
-func isAnagram(s string, t string) bool {
+func isAnagramV2(s string, t string) bool {
 	n1, n2 := len(s), len(t)
 	if n1 != n2 {
 		return false
 	}
-	s2int := make(map[rune]int, n1)
-	t2int := make(map[rune]int, n2)
+	sArr := [26]int{}
+	tArr := [26]int{}
 	for _, x := range s {
-		s2int[x]++
+		sArr[x-'a']++
 	}
 	for _, x := range t {
-		t2int[x]++
+		tArr[x-'a']++
 	}
-	for k, v := range s2int {
-		if t2int[k] != v {
-			return false
-		}
-	}
-	return true
+	return sArr == tArr
 }
 
 func main() {
 	s, t := "anagram", "nagaram"
-	res := isAnagram(s, t)
+	res := isAnagramV2(s, t)
 	fmt.Println(res)
 }

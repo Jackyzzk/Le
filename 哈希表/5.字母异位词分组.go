@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。
 
@@ -28,17 +30,23 @@ https://leetcode.cn/problems/group-anagrams/description/
 */
 
 func groupAnagrams(strs []string) [][]string {
-	mapList := make([]map[byte]int, 0, len(strs))
+	arr2str := make(map[[26]int][]string, len(strs))
 	for _, x := range strs {
-		byte2int := make(map[byte]int, len(x))
-		for i := range x {
-			byte2int[x[i]]++
+		arr := [26]int{}
+		for _, r := range x {
+			arr[r-'a']++
 		}
-		mapList = append(mapList, byte2int)
+		arr2str[arr] = append(arr2str[arr], x)
 	}
-	ret := make([][]string, 0, len(strs))
-	i2index := make(map[int]int, len(strs))
-	for i := range  strs {
-		if _, ok := i2index[i];
+	ret := make([][]string, 0, len(arr2str))
+	for _, x := range arr2str {
+		ret = append(ret, x)
 	}
+	return ret
+}
+
+func main() {
+	strs := []string{"eat", "tea", "tan", "ate", "nat", "bat"}
+	res := groupAnagrams(strs)
+	fmt.Println(res)
 }
