@@ -42,41 +42,30 @@ https://leetcode.cn/problems/insert-interval/description/
 */
 
 func insert(intervals [][]int, newInterval []int) [][]int {
-	if len(intervals) == 0 {
-		return [][]int{newInterval}
-	}
-	index := 0
-	for i, x := range intervals {
-		if x[0] > newInterval[0] {
-			index = i
-			intervals = append(intervals[:i], append([][]int{newInterval}, intervals[i:]...)...)
-			break
-		}
-	}
-	if index > 0 {
-		index--
-	}
-	ret := intervals[:index]
+	a, b := newInterval[0], newInterval[1]
+	left := make([][]int, 0, len(intervals)+1)
+	right := make([][]int, 0, len(intervals)+1)
 
-	l, r := intervals[index][0], intervals[index][1]
-	for i := index + 1; i < len(intervals); i++ {
-		x, y := intervals[i][0], intervals[i][1]
-		if x <= r && y > r {
-			r = y
-			continue
-		}
-		if x > r {
-			index = i
-			break
+	for _, x := range intervals {
+		if x[1] < a {
+			left = append(left, x)
+		} else if x[0] > b {
+			right = append(right, x)
+		} else {
+			a = min(a, x[0])
+			b = max(b, x[1])
 		}
 	}
-	ret = append(ret, append([][]int{{l, r}}, intervals[index:]...)...)
-	return ret
+	ret := append(left, []int{a, b})
+	return append(ret, right...)
 }
 
 func main() {
 	//intervals, newInterval := [][]int{{1, 2}, {3, 5}, {6, 7}, {8, 10}, {12, 16}}, []int{4, 8}
-	intervals, newInterval := [][]int{{1, 5}}, []int{2, 3} // [[1,5]]
+	//intervals, newInterval := [][]int{{1, 5}}, []int{2, 3} // [[1,5]]
+	//intervals, newInterval := [][]int{{1, 5}}, []int{2, 7} // [[1,7]]
+	//intervals, newInterval := [][]int{{0, 2}, {3, 9}}, []int{6, 8} // [[0,2],[3,9]]
+	intervals, newInterval := [][]int{{0, 5}, {9, 12}}, []int{7, 16} // [[0,5],[7,16]]
 	res := insert(intervals, newInterval)
 	fmt.Println(res)
 }
