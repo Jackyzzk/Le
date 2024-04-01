@@ -45,5 +45,22 @@ type Node struct {
 }
 
 func copyRandomList(head *Node) *Node {
-
+	ret := &Node{}
+	p1, p2 := head, ret
+	old2new := make(map[*Node]*Node)
+	for p1 != nil {
+		p2.Next = &Node{
+			Val: p1.Val,
+		}
+		old2new[p1] = p2.Next
+		p1 = p1.Next
+		p2 = p2.Next
+	}
+	p1, p2 = head, ret.Next
+	for p1 != nil {
+		p2.Random = old2new[p1.Random]
+		p2 = p2.Next
+		p1 = p1.Next
+	}
+	return ret.Next
 }
