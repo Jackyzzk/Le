@@ -40,17 +40,60 @@ lRUCache.get(4);    // 返回 4
 https://leetcode.cn/problems/lru-cache/description/
 */
 
+type DL struct {
+	key   int
+	value int
+	left  *DL
+	right *DL
+}
+
 type LRUCache struct {
+	n    int
+	k2d  map[int]*DL
+	top  *DL
+	tail *DL
 }
 
 func Constructor(capacity int) LRUCache {
-
+	top := &DL{}
+	tail := &DL{}
+	top.right, tail.left = tail, top
+	return LRUCache{
+		n:    capacity,
+		k2d:  make(map[int]*DL, capacity),
+		top:  top,
+		tail: tail,
+	}
 }
 
 func (this *LRUCache) Get(key int) int {
+	d, ok := this.k2d[key]
+	if !ok {
+		return -1
+	}
 
+	if d != this.top.right {
+		d.left.right, d.right.left = d.right, d.left
+		d.left, d.right = this.top, this.top.right
+		this.top.right.left, this.top.right = d, d
+	}
+
+	return d.value
 }
 
 func (this *LRUCache) Put(key int, value int) {
+	v := this.Get(key)
+	if v != -1 {
+		this.k2d[key].value = value
+		return
+	}
 
+	d := &DL{key: key, value: value, left: this.top, right: this.top.right}
+	this.top.right.left, this.top.right = d, d
+
+	if len(this.k2d) == this.n {
+		delete(this.k2d, this.tail.left.key)
+		this.tail.left.left.right, this.tail.left = this.tail, this.tail.left.left
+	}
+	this.k2d[key] = d
 }
