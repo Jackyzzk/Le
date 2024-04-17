@@ -28,6 +28,47 @@ inorder 保证 为二叉树的中序遍历序列
 https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
 */
 
-func buildTree(preorder []int, inorder []int) *TreeNode {
+// [ 根节点, [左子树的前序遍历结果], [右子树的前序遍历结果] ]
+// [ [左子树的中序遍历结果], 根节点, [右子树的中序遍历结果] ]
 
+func buildTreeV1(preorder []int, inorder []int) *TreeNode {
+	if len(preorder) == 0 {
+		return nil
+	}
+	root := &TreeNode{Val: preorder[0]}
+	i := 0
+	for ; ; i++ {
+		if inorder[i] == root.Val {
+			break
+		}
+	}
+	root.Left = buildTreeV1(preorder[1:i+1], inorder[:i])
+	root.Right = buildTreeV1(preorder[i+1:], inorder[i+1:])
+	return root
+}
+
+// 优化每次找根节点的时间消耗
+func buildTreeV2(preorder []int, inorder []int) *TreeNode {
+	n := len(inorder)
+	root2index := make(map[int]int, n)
+	for i, x := range inorder {
+		root2index[x] = i
+	}
+
+	var build func(p1, p2, i1, i2 int) *TreeNode
+	build = func(p1, p2, i1, i2 int) *TreeNode {
+		if p1 > p2 || i1 > i2 {
+			return nil
+		}
+		root := &TreeNode{Val: preorder[p1]}
+		index := root2index[root.Val]
+		// 注意这个index是inorder的 不可直接用于preorder
+		// 在preorder使用时需要转换为步长
+		n1, n2 := index-i1-1, i2-index-1
+		root.Left = build(p1+1, p1+1+n1, i1, index-1)
+		root.Right = build(p2-n2, p2, index+1, i2)
+		return root
+	}
+
+	return build(0, n-1, 0, n-1)
 }
