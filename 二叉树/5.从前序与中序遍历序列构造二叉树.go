@@ -24,6 +24,9 @@ inorder 保证 为二叉树的中序遍历序列
 
 先序遍历也叫做前序遍历、先根遍历，可记做根左右。
 中序遍历 左根右
+后序遍历 左右根
+
+这里的序说的是根在哪
 
 https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
 */
