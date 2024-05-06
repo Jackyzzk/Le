@@ -29,17 +29,25 @@ package main
 https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/description/
 */
 
+// 右左根
+
 func flatten(root *TreeNode) {
 	if root == nil {
 		return
 	}
-	flatten(root.Left)
-	flatten(root.Right)
 	right := root.Right
-	root.Right = root.Left
-	p := root.Right
-	for p != nil && p.Right != nil {
-		p = p.Right
+	left := root.Left
+	root.Left = nil
+	flatten(right)
+	flatten(left)
+	if left != nil {
+		root.Right = left
+		p := left
+		for p != nil && p.Right != nil {
+			p = p.Right
+		}
+		p.Right = right
+	} else {
+		root.Right = right
 	}
-	p.Right = right
 }
